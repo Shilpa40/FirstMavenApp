@@ -8,7 +8,7 @@ RUN mvn dependency:go-offline -B
 
 RUN mvn package
 
-FROM openjdk:8u221-jre-alpine
+FROM openjdk:8u171-jre-alpine
 
 WORKDIR /shilpabains
 
