@@ -1,9 +1,12 @@
-   pipeline  {
-                    docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+node {
 
-                    def customImage = docker.build("shilpabains/Firstweb-app")
+    checkout scm
 
-                    /* Push the container to the custom Registry */
-                    customImage.push()
-                }
-          }
+    docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+
+        def customImage = docker.build("shilpabains/First-web-app")
+
+        /* Push the container to the custom Registry */
+        customImage.push()
+    }
+}
