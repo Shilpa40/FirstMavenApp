@@ -17,6 +17,7 @@ pipeline {
             }
         }
         stage ('Dpcker integration') {
+            agent docker
             steps{
                     docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
 
