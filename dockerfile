@@ -1,12 +1,17 @@
-node {
+FROM maven:3.5.4-jdk-8-alpine as maven
 
-    checkout scm
+COPY ./pom.xml ./pom.xml
 
-    docker.withRegistry('https://registry.hub.docker.com', 'DockerHub') {
+COPY ./src ./src
 
-        def customImage = docker.build("shilpabains/First-web-app")
+RUN mvn dependency:go-offline -B
 
-        /* Push the container to the custom Registry */
-        customImage.push()
-    }
-}
+RUN mvn package
+
+FROM openjdk:8u221-jre-alpine
+
+WORKDIR /shilpabains
+
+COPY --from=maven target/First-web-app-*.jar ./First-web-app.jar
+
+CMD ["java", "-jar", "./First-web-app.jar"]
